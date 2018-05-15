@@ -1,0 +1,9 @@
+Building MorozzzCoin
+
+See doc/readme-qt.rst for instructions on building MorozzzCoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of MorozzzCoin.
+
+See doc/build-*.txt for instructions on building MorozzzCoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of MorozzzCoin.

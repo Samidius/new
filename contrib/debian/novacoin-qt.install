@@ -1,0 +1,5 @@
+MorozzzCoin-qt usr/bin
+share/pixmaps/MorozzzCoin32.xpm usr/share/pixmaps
+share/pixmaps/MorozzzCoin80.xpm usr/share/pixmaps
+debian/MorozzzCoin-qt.desktop usr/share/applications
+debian/MorozzzCoin-qt.protocol usr/share/kde4/services/

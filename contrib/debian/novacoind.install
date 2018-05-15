@@ -1,0 +1,2 @@
+debian/bin/MorozzzCoind usr/bin
+src/MorozzzCoind usr/lib/MorozzzCoin

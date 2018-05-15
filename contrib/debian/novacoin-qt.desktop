@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=MorozzzCoin
+Comment=MorozzzCoin P2P Cryptocurrency
+Comment[ru]=MorozzzCoin, P2P криптовалюта
+Comment[fr]=MorozzzCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=MorozzzCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/MorozzzCoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/MorozzzCoin80.xpm
+MimeType=x-scheme-handler/MorozzzCoin;
+Categories=Office;

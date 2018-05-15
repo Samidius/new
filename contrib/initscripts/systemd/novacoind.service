@@ -1,0 +1,11 @@
+[Unit]
+Description=MorozzzCoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=MorozzzCoin
+ExecStart=/opt/MorozzzCoin/MorozzzCoind
+
+[Install]
+WantedBy=multi-user.target

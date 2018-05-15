@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: MorozzzCoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# MorozzzCoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable MorozzzCoin service.
+# MorozzzCoin_config (path): Set to /usr/local/etc/MorozzzCoin.conf by default.
+# MorozzzCoin_user:  The user account MorozzzCoin daemon runs as. It uses 'root' user by default.
+# MorozzzCoin_group: The group account MorozzzCoin daemon runs as. It uses 'wheel' group by default.
+# MorozzzCoin_datadir (str): Default to "/var/db/MorozzzCoin". Base data directory.
+
+. /etc/rc.subr
+
+name=MorozzzCoin
+rcvar=MorozzzCoin_enable
+
+: ${MorozzzCoin_enable:=NO}
+: ${MorozzzCoin_config=/usr/local/etc/MorozzzCoin.conf}
+: ${MorozzzCoin_datadir=/var/db/MorozzzCoin}
+: ${MorozzzCoin_user="root"}
+: ${MorozzzCoin_group="wheel"}
+
+required_files=${MorozzzCoin_config}
+command=/usr/local/bin/MorozzzCoind
+MorozzzCoin_chdir=${MorozzzCoin_datadir}
+pidfile="${MorozzzCoin_datadir}/MorozzzCoind.pid"
+stop_cmd=MorozzzCoin_stop
+command_args="-conf=${MorozzzCoin_config} -datadir=${MorozzzCoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+MorozzzCoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${MorozzzCoin_datadir}
+	[ $? -eq 0 ] && chown -R ${MorozzzCoin_user}:${MorozzzCoin_group} ${MorozzzCoin_datadir}
+}
+
+MorozzzCoin_prestart()
+{
+	if [ ! -d "${MorozzzCoin_datadir}/." ]; then
+		MorozzzCoin_create_datadir || return 1
+	fi
+}
+
+MorozzzCoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+MorozzzCoin_stop()
+{
+    MorozzzCoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${MorozzzCoin_config} -datadir=${MorozzzCoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"
